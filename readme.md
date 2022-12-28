@@ -13,21 +13,22 @@ The following types are supported so far:
 
 To each word type, there are certain characteristics which the word belonging to that type has.
 For example car is a noun, and by nouns we characterize:
-- wort: Auto
+- english name: car
+- name: Auto 
 - article: das
 - plural: Autos
 - declension: des Autos
 - meaning: ein Fahrzeug mit vier Rädern
 
 By verbs we characterize (for example - to be):
-- wort: sein
-- present tense: bin
-- past tense: war
-- future tense: werde
-- present participle: werdend
+- english name: to be
+- name: sein
+- present tense: bin, bist, ist, sind, seid, sind
+- past tense: war, warst, war, waren, wart, waren
+- future tense: werde, wirst, wird, werden, werdet, werden
 - past participle: gewesen
 - auxiliary verb: sein
-- meaning: 
+- meanings: [Eigenshaft haben; existieren; sich befinden; zutreffen; ...]
 
 By adjectives we characterize (for example - big):
 - wort: groß
