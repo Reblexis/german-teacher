@@ -5,6 +5,8 @@ from collections import namedtuple
 
 from DataManagment.file_system import load_file
 
+class Noun:
+    def __init__(self, english_name: str, german_name: str = None, plural: str = None, gender: str = None, ):
 
 class Dictionary:
     DICTIONARY_URL = "https://api.pons.com/v1/dictionary"

@@ -4,6 +4,7 @@ import shutil
 import pandas as pd
 import json
 import numpy as np
+import io
 
 
 def clear_folder_content(folder_path: Path, including_folder: bool = False):
@@ -53,12 +54,18 @@ def save_to_file(to_save, file_path: Path, additional_info=None):
         raise NotImplementedError(f"Saving of this type: {type(to_save)} isn't implemented yet. File: {file_path} .")
 
 
-def load_file(file_path: Path):
+def load_file(file_path: Path, additional_info: dict = None):
+    info = {"type": "json"}
+    if additional_info is not None:
+        info.update(additional_info)
     if file_path.suffix == ".csv":
         return pd.read_csv(file_path, index_col=0)
-    elif file_path.suffix == ".txt":
+    elif file_path.suffix == ".txt" and info["type"] == "json":
         with open(file_path) as f:
             return json.load(f)
+    elif file_path.suffix == ".txt" and info["type"] == "lines":
+        f = io.open(file_path, "r", encoding="utf-8")
+        return f.readlines()
     elif file_path.suffix == ".wav":
         data, sample_rate = librosa.load(file_path, sr=None)
         return sample_rate, data
