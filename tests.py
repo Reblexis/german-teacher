@@ -1,7 +1,7 @@
 import googletrans
 
 
-text1 = "Gut"
+text1 = "Mann"
 text2 = "world"
 
 translator = googletrans.Translator()

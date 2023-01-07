@@ -1,0 +1,156 @@
+
+body{
+    background-color: #FFFFFA;
+}
+
+p{
+    font-family: "Roboto Thin", sans-serif;
+    font-size: 20px;
+    color: #40434E;
+    text-align: center;
+}
+
+.title{
+    display: flex;
+    font-size: 60px;
+    color: #40434E;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 50px;
+}
+
+.menu{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    align-items: center;
+}
+.panel{
+    display: none; /* when selected it should be set to flex */
+    justify-content: center;
+    margin-top: 50px;
+    align-items: center;
+    font-size: 20px;
+}
+button
+{
+    background-color: #912f40;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.panel_button{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+button:hover{
+    background-color: #702632;
+    color: white;
+}
+button.selected{
+    background-color: #702632;
+    color: white;
+}
+
+.practice
+{
+    display: flex;
+    width: 100%;
+    /*justify-content: center;*/
+    margin-top: 50px;
+    align-items: center;
+    font-size: 20px;
+}
+
+.practice_category_checkboxes
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    font-size: 20px;
+    flex-direction: column;
+}
+
+.practice_category_checkbox{
+    margin: 30px;
+    vertical-align: middle;
+}
+
+.practice_category_checkbox input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+}
+
+.practice_category_checkbox label {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.practice_category_checkbox input[type=checkbox]{
+  accent-color: #40434E;
+}
+
+.practice_category_checkbox input[type=checkbox]:checked{
+    background-color: #40434E;
+}
+
+.practice_category_checkbox input[type=checkbox]:hover {
+    background-color: #912f40;
+}
+
+.practice_content
+{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    display:flex;
+    padding: 10px;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+}
+.practice_content_title_text
+{
+    font-size: 30px;
+    color: #40434E;
+    font-family: 'Roboto bold', sans-serif;
+}
+.article_practice_content
+{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.answer_text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.answer_text input[type=text] {
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}

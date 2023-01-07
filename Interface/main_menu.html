@@ -2,16 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>German teacher</title>
+    <title>German Teacher</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Include eel.js - note this file doesn't exist in the 'web' directory -->
     <script type="text/javascript" src= "/eel.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="ui.js"></script>
 </head>
-<body>
-    <h1>German teacher</h1>
-    <button>Vocabulary</button>
-    <button>Grammar</button>
-    <button>Listening</button>
-    <button>Speaking</button>
+<body onload="init()">
+    <div class="title">
+        GERMAN TEACHER
+    </div>
+    <div class="menu">
+        <button id="practice_button" class="panel_button" onclick="show_panel(0)">Practice</button>
+        <button id="stats_button" class="panel_button" onclick="show_panel(1)">Stats</button>
+        <button id="about_button" class="panel_button" onclick="show_panel(2)">About</button>
+    </div>
+
+    <div id="practice_panel" class="panel">
+        <div class = "practice">
+            <div class="practice_settings">
+                <div class="practice_category_checkboxes">
+                    <div class="practice_category_checkbox">
+                        <input type="checkbox" id="practice_category_1" name="practice_category_1" value="1">
+                        <label for="practice_category_1">Articles</label>
+                    </div>
+                    <div class="practice_category_checkbox">
+                        <input type="checkbox" id="practice_category_2" name="practice_category_2" value="2">
+                        <label for="practice_category_2">Translation</label>
+                    </div>
+                    <div class="practice_category_checkbox">
+                        <input type="checkbox" id="practice_category_3" name="practice_category_3" value="3">
+                        <label for="practice_category_3">Synonyms</label>
+                    </div>
+                </div>
+            </div>
+            <div class="practice_content">
+                <div class="practice_content_title_text">
+                    <span id="practice_content_title_text">What's the correct article?</span>
+                </div>
+                <div class="article_practice_content">
+                    <div class="question_text">
+                        (der/die/das) Auto
+                    </div>
+                    <div class="answer_text">
+                        <input type="text" id="answer_input" name="answer_input" value="">
+                        <button id="answer_button" class="answer_button" onclick="answer()">Answer (Enter)</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="stats_panel" class="panel">
+        <div class = "stats">
+
+        </div>
+    </div>
+
+    <div id="about_panel" class="panel">
+        <div class = "about">
+            <p>
+                <b>German Teacher</b> is an <b>open-source</b> project that's designed to help students with learning german <b>rules</b> and <b>vocabulary</b>. <br>
+                There is also an access to <b>analytics</b> regarding your <b>performance</b> and <b>improvement</b>.
+            </p>
+            <p>
+                Please keep in mind that this project is still <b>under development</b> and there may be some bugs or incomplete features.<br>
+                If you find any bugs or if you are interested in contributing to the project,
+                please contact me at my email: <a href = "mailto: viktor.cihal@gmail.com">viktor.cihal@gmail.com</a>.<br>
+                You can also report any issues at the <a href = "https://github.com/Reblexis/German-Teacher"> GitHub Repository </a>.
+            </p>
+        </div>
+    </div>
 </body>
 </html>
