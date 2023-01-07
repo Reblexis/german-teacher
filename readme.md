@@ -9,14 +9,9 @@ that the word is used in a sentence.
 The following types are supported so far: 
 ```diff
 + noun
-- text in green
-- text in orange
-```
-- noun
-- ![#c5f015](https://placehold.co/15x15/c5f015/c5f015.png) `#c5f015`
 - verb
 - adjective
-
+```
 To each word type, there are certain characteristics which the word belonging to that type has.
 For example car is a noun, and by nouns we characterize:
 - english name: car
