@@ -4,10 +4,16 @@ The goal of this app is to help you learn rules in the german language as fast a
 
 ## Word types ##
 Each word if of a certain type.
-The type of a word is determined by the way
+The type of word is determined by the way
 that the word is used in a sentence. 
 The following types are supported so far: 
+```diff
++ noun
+- text in green
+- text in orange
+```
 - noun
+- ![#c5f015](https://placehold.co/15x15/c5f015/c5f015.png) `#c5f015`
 - verb
 - adjective
 
@@ -20,7 +26,7 @@ For example car is a noun, and by nouns we characterize:
 - declension: des Autos
 - meaning: ein Fahrzeug mit vier Rädern
 
-By verbs we characterize (for example - to be):
+By verbs, we characterize (for example - to be):
 - english name: to be
 - name: sein
 - present tense: bin, bist, ist, sind, seid, sind
@@ -30,7 +36,7 @@ By verbs we characterize (for example - to be):
 - auxiliary verb: sein
 - meanings: [Eigenshaft haben; existieren; sich befinden; zutreffen; ...]
 
-By adjectives we characterize (for example - big):
+By adjectives, we characterize (for example - big):
 - wort: groß
 - comparative: größer
 - superlative: am größten

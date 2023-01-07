@@ -4,18 +4,25 @@ import bs4
 from typing import Union
 import pandas as pd
 import ast
+import googletrans
 
 from constants import *
 from DataManagment.file_system import load_file, save_to_file
 
 
 class Dictionary:
+    """
+    Allows for API interaction and word info lookup. Also saves data to local dictionary
+    for faster retrieval and less API communication. Uses two APIs: PONS and Google Translate.
+    """
     DICTIONARY_PATH = CLEANED_DATASETS_PATH / "dictionary.pickle"
     DICTIONARY_URL = "https://api.pons.com/v1/dictionary"
     API_KEY_PATH = API_PATH / "key.txt"
 
     GENDER_ENCODING = {"nt": GENDERS.NEUTER, "m": GENDERS.MASCULINE, "f": GENDERS.FEMININE, None: None}
     WORD_TYPE_ENCODING = {"N": WORD_TYPES.NOUN, "VB": WORD_TYPES.VERB, "ADJ": WORD_TYPES.ADJECTIVE, None: None}
+    GOOGLE_WORD_TYPE_ENCODING = {"noun": WORD_TYPES.NOUN, "verb": WORD_TYPES.VERB, "adjective": WORD_TYPES.ADJECTIVE,
+                                 None: None}
 
     NUM_MEANINGS_LIMIT = 5
 
@@ -30,10 +37,12 @@ class Dictionary:
             # Create dictionary with a useless row to prevent bugs
             example = {"name": "test_name", "article": "test_article", "flexion": "test_flexion",
                        "meanings": "test_meanings", "word_type": "test_type", "english_names": "test_english_names"}
-            self.dictionary = pd.DataFrame()
+            self.dictionary_df = pd.DataFrame()
             self.save_to_local_dictionary(example)
 
-        self.dictionary = pd.read_pickle(self.DICTIONARY_PATH) if self.DICTIONARY_PATH.exists() else pd.DataFrame()
+        self.google_translator = googletrans.Translator()
+
+        self.dictionary_df = pd.read_pickle(self.DICTIONARY_PATH) if self.DICTIONARY_PATH.exists() else pd.DataFrame()
 
     def find(self, class_name: str):
         soup = bs4.BeautifulSoup(self.searched_space, "html.parser")
@@ -43,17 +52,28 @@ class Dictionary:
         return data.get_text()
 
     def save_to_local_dictionary(self, info: dict):
-        self.dictionary = pd.concat([self.dictionary, pd.DataFrame([info])])
-        self.dictionary.to_pickle(self.DICTIONARY_PATH)
+        self.dictionary_df = pd.concat([self.dictionary_df, pd.DataFrame([info])])
+        self.dictionary_df.to_pickle(self.DICTIONARY_PATH)
 
     def word_info(self, german_name: str) -> Union[dict, str]:
-        if len(self.dictionary[self.dictionary["name"] == german_name]) > 0:
+        if len(self.dictionary_df[self.dictionary_df["name"] == german_name]) > 0:
             print("Loaded from local dictionary!")
-            return self.dictionary[self.dictionary["name"] == german_name].iloc[0].to_dict()
+            return self.dictionary_df[self.dictionary_df["name"] == german_name].iloc[0].to_dict()
 
-        info = {"name": german_name, "article": None, "flexion": None, "meanings": None, "english_names": None}
+        german_name = german_name.capitalize()  # Ensuring that the word would be understood as noun
+
+        info = {"name": german_name, "article": None, "flexion": None, "meaning": None, "english_names": None}
         url = f"{self.DICTIONARY_URL}?l=deen&q={german_name}"
+
+        translation = self.google_translator.translate(german_name, src='de', dest="en")
+        google_word_data = translation.extra_data
+        google_word_type = self.GOOGLE_WORD_TYPE_ENCODING[google_word_data['all-translations'][0][0]]
+        if google_word_type != WORD_TYPES.NOUN:
+            print("Word is not a noun!")
+            return "Word is not a noun!"
+
         response = requests.get(url, headers=self.header)
+
         if response.status_code == 200:
             full_response = response.json()[0]["hits"][0]["roms"][0]
             headword_full = full_response["headword_full"]
@@ -61,7 +81,7 @@ class Dictionary:
             self.searched_space = headword_full
 
             info["word_type"] = self.WORD_TYPE_ENCODING[self.find("wordclass")]
-            if info["word_type"] != WORD_TYPES.NOUN:
+            if info["word_type"] != WORD_TYPES.NOUN:  # temporary, due to a lacking implementation of other types
                 return info
 
             info["article"] = self.GENDER_ENCODING[self.find("genus")]
@@ -70,19 +90,8 @@ class Dictionary:
                 info["flexion"] = info["flexion"].replace(" ", "").replace("<", "").replace(">", "")
                 info["flexion"] = info["flexion"].split(",")
 
-            info["meanings"] = []
-            info["english_names"] = []
-
-            max_search_length = min(len(full_response["arabs"]), self.NUM_MEANINGS_LIMIT)
-            for i in range(max_search_length):
-                arab = full_response["arabs"][i]
-                meaning_cleaned = bs4.BeautifulSoup(arab["header"], "html.parser").get_text()
-                if "(" not in meaning_cleaned and meaning_cleaned != "":
-                    break
-                meaning_cleaned = re.split("\(|\)", meaning_cleaned)[1] if "(" in meaning_cleaned else None
-                info["meanings"].append(meaning_cleaned)
-                english_name = bs4.BeautifulSoup(arab["translations"][0]["target"], "html.parser").get_text()
-                info["english_names"].append(english_name)
+            info["meaning"] = google_word_data['definitions'][0][1][0][0]
+            info["english_names"] = google_word_data['all-translations'][0][1]
 
             save_to_file(full_response, API_PATH / "last_response.txt")
 
@@ -94,9 +103,9 @@ class Dictionary:
 
 class Noun:
     def __init__(self, name: str, english_names: list = None, article: str = None, plural: str = None,
-                 declension: str = None, meanings: list = None, dictionary: Dictionary = None):
+                 declension: str = None, meaning: str = None, dictionary: Dictionary = None):
 
-        if english_names is None or article is None or plural is None or declension is None or meanings is None:
+        if english_names is None or article is None or plural is None or declension is None or meaning is None:
             assert dictionary is not None, "If you don't provide all the information, you must provide a dictionary."
             word_info = {"declension": None}
             received_info = dictionary.word_info(name)
@@ -110,7 +119,7 @@ class Noun:
             flexion = word_info["flexion"]
             plural = flexion[1] if (flexion is not None and len(flexion) > 1) else None
             declension = word_info["flexion"][0] if flexion is not None else None
-            meanings = word_info["meanings"]
+            meaning = word_info["meaning"]
             dictionary.save_to_local_dictionary(word_info)
 
         self.name = name
@@ -118,17 +127,38 @@ class Noun:
         self.article = article
         self.plural = plural
         self.declension = declension
-        self.meanings = meanings
+        self.meaning = meaning
 
     def __str__(self):
         return f"{self.article} {self.name} ({self.plural}) - {self.english_names}"
 
-    def meanings(self):
-        return self.meanings
+    def to_dict(self):
+        return {"name": self.name, "english_names": self.english_names, "article": self.article, "plural": self.plural,
+                "declension": self.declension, "meaning": self.meaning}
+
+    def meaning(self):
+        return self.meaning
+
+
+class DictionaryController:
+    def __init__(self):
+        self.dictionary = Dictionary()
+        self.dictionary_df = self.dictionary.dictionary_df
+
+    def get_random_noun(self, prioritized_property: str):
+        non_empty_articles = self.dictionary_df[self.dictionary_df[prioritized_property].notnull()]
+        random_row = non_empty_articles.sample()
+        return Noun(random_row["name"].iloc[0], dictionary=self.dictionary)
 
 
 if __name__ == "__main__":
     test_dictionary = Dictionary()
+    print("Dictionary test:")
     noun = Noun("Hand", dictionary=test_dictionary)
     print(noun)
-    print(noun.meanings)
+    print(noun.meaning)
+
+    print("\nDictionary controller test:")
+    dictionary_controller = DictionaryController()
+    random_noun = dictionary_controller.get_random_noun("article")
+    print(random_noun)

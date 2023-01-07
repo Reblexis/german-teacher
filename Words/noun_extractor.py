@@ -27,8 +27,3 @@ for noun in nouns:
         continue
     except ValueError:
         print(f"ValueError: {german_name}")
-        continue
-
-
-df = pd.DataFrame({"english_name": english_names, "german_name": german_names, "plural": plurals})
-df.to_csv("nouns.csv", index=False)

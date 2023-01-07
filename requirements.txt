@@ -3,3 +3,5 @@ numpy~=1.23.5
 requests~=2.28.1
 bs4~=0.0.1
 beautifulsoup4~=4.11.1
+googletrans~=3.1.0a0
+eel~=0.15.1
