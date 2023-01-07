@@ -154,3 +154,21 @@ button.selected{
     justify-content: center;
     align-items: center;
 }
+
+.incorrect_answer_text{
+    color: red;
+    opacity: 0;
+    font-family: "Roboto bold", sans-serif;
+}
+
+.opacity_transition{
+    transition: opacity 2s;
+}
+
+.hidden{
+    opacity: 0;
+}
+
+.visible{
+    opacity: 1;
+}

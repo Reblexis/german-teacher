@@ -6,9 +6,11 @@ from dictionary import DictionaryController, Noun
 
 class PracticeController:
     def __init__(self):
+        print("Initializing practice controller...")
         self.types = ["article", "meaning", "english_names"]
         self.correct_answer = None
         self.dictionary_controller = DictionaryController()
+        print("Practice controller initialized.")
 
     def create_question(self):
         question_type = random.choice(self.types)
@@ -17,9 +19,9 @@ class PracticeController:
         self.correct_answer = random_noun.to_dict()[question_type]
         return question
 
-    def receive_answer(self, answer: dict):
+    def receive_answer(self, answer_data: dict):
         # TODO: manage statistics
-        return answer["content"] == self.correct_answer
+        return answer_data["answer_input"] == self.correct_answer
 
 
 practice_controller = PracticeController()
@@ -31,5 +33,5 @@ def create_question():
 
 
 @eel.expose
-def receive_answer(answer: dict):
-    return practice_controller.receive_answer(answer)
+def answer(answer_content: dict):
+    return practice_controller.receive_answer(answer_content)

@@ -6,7 +6,7 @@ The goal of this app is to help you learn rules in the german language as fast a
 Each word if of a certain type.
 The type of word is determined by the way
 that the word is used in a sentence. 
-The following types are supported so far: 
+The following types are supported so far (green): 
 ```diff
 + noun
 - verb

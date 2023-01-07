@@ -10,8 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <script type="text/javascript" src="ui.js"></script>
+    <script type="text/javascript" src="practice.js"></script>
 </head>
-<body onload="init()">
+<body onload="ui_init(); practice_init();">
     <div class="title">
         GERMAN TEACHER
     </div>
@@ -44,12 +45,15 @@
                     <span id="practice_content_title_text">What's the correct article?</span>
                 </div>
                 <div class="article_practice_content">
-                    <div class="question_text">
-                        (der/die/das) Auto
+                    <div id="practice_question_text" class="question_text">
+                        Auto
                     </div>
                     <div class="answer_text">
                         <input type="text" id="answer_input" name="answer_input" value="">
                         <button id="answer_button" class="answer_button" onclick="answer()">Answer (Enter)</button>
+                    </div>
+                    <div id="incorrect_answer_text" class="incorrect_answer_text">
+                        INCORRECT
                     </div>
                 </div>
             </div>

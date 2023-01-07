@@ -23,7 +23,9 @@ function show_panel(panel_index)
     console.log("Showing panel " + panel_index);
 }
 
-function init()
+function ui_init()
 {
+    eel.python_log("Initializing UI...");
     show_panel(0);
+    eel.python_log("UI initialized.");
 }
