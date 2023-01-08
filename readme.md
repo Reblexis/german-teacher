@@ -7,11 +7,12 @@ that would allow for a more effective learning.
 ## Setup ##
 So far only one setup has been tested:
 - Windows 11
-- Python 3.10.8
+- Python 3.10.8 / 3.10.9
 
 ## Installation ##
 1. Clone the repository
 2. Install the requirements using `pip install -r requirements.txt`
+3. Run the launcher.py file
 
 ## Word types ##
 Each word is of a certain type.

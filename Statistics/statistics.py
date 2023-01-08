@@ -86,6 +86,7 @@ def show_statistics():
     plt.title("Accuracy over time")
     plt.gca().yaxis.set_major_formatter(lambda x, pos: f"{x * 100:.0f}%")
     plt.legend(loc="upper left")
+    ensure_dir(ACCURACY_PLOT_PATH.parent)
     plt.savefig(ACCURACY_PLOT_PATH)
     plt.close()
     return
