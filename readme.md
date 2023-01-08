@@ -40,4 +40,9 @@ By adjectives, we characterize (for example - big):
 For each of these word types there is a lot of corresponding words saved in the database.
 You can practice different rules by selecting them using the GUI.
 
+## Screenshots ##
+### Practice menu ###
+![Screenshot](Screenshots/practice_menu.png)
+### Basic statistics ###
+![Screenshot](Screenshots/stats_menu.png)
 
