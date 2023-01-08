@@ -1,6 +1,17 @@
 # German teacher
 
-The goal of this app is to help you learn rules in the german language as fast as possible.
+The goal of this app is to help you learn german rules and vocabulary. It is currently in development and therefore contains only core features.  
+For future, there is a plan to add advanced statistics, more practice modes, better feedback loop and background intelligence
+that would allow for more effective learning.
+
+## Setup ##
+So far only one setup has been tested:
+- Windows 11
+- Python 3.10.8
+
+## Installation ##
+1. Clone the repository
+2. Install the requirements using `pip install -r requirements.txt`
 
 ## Word types ##
 Each word if of a certain type.
@@ -42,7 +53,8 @@ You can practice different rules by selecting them using the GUI.
 
 ## Screenshots ##
 ### Practice menu ###
-![Screenshot](Screenshots/practice_menu.png)
+![Screenshot](Documentation/Screenshots/practice_menu.png)
 ### Basic statistics ###
-![Screenshot](Screenshots/stats_menu.png)
+![Screenshot](Documentation/Screenshots/stats_menu.png)
+
 

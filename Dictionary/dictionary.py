@@ -9,7 +9,7 @@ import numpy as np
 import random
 
 from constants import *
-from DataManagment.file_system import load_file, save_to_file
+from DataManagement.file_system import load_file, save_to_file
 
 
 class Dictionary:

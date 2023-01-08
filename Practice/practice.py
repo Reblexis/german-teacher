@@ -1,7 +1,7 @@
 import random
 import eel
 
-from dictionary import DictionaryController, Noun
+from Dictionary.dictionary import DictionaryController, Noun
 from Statistics import statistics
 
 
