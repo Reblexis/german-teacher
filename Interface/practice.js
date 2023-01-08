@@ -42,15 +42,35 @@ function answer()
     let answer = answer_input.value;
     answer_input.value = "";
 
-    eel.answer({"answer_input": answer})(answer_response);
+    eel.answer({"answer_text": answer})(answer_response);
+}
+
+function answer_option(option_index)
+{
+    eel.answer({"answer_option": option_index})(answer_response);
 }
 
 function set_new_question(question_content)
 {
+    eel.python_log("Setting new question...");
     let practice_content_title_text = document.getElementById("practice_content_title_text");
     let practice_question_text = document.getElementById("practice_question_text");
     let question_type = question_content["type"]; // "article", "meaning", "english_names"
 
     practice_content_title_text.innerHTML = question_title_text_mapping[question_type];
-    practice_question_text.innerHTML = question_content["word_data"]["name"];
+    practice_question_text.innerHTML = question_content["questioned_content"];
+
+    let input_answer_content = document.getElementById("input_answer_content");
+    let options_answer_content = document.getElementById("options_answer_content");
+
+    for (let i = 0; i < 4; i++)
+    {
+        let cur_option_button = document.getElementById("option_button_" + (i + 1));
+        cur_option_button.innerHTML = question_content["possible_answers"][i];
+    }
+
+    let enable_input_mode = (question_type ==="article")
+    input_answer_content.style.display = enable_input_mode ? "flex" : "none";
+    options_answer_content.style.display = enable_input_mode ? "none" : "grid";
+    eel.python_log("New question set.");
 }

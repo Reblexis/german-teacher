@@ -116,10 +116,8 @@ button.selected{
 {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
     width: 70%;
     display:flex;
-    padding: 10px;
     font-size: 30px;
     font-family: 'Roboto', sans-serif;
     text-align: center;
@@ -127,6 +125,10 @@ button.selected{
     align-items: center;
     flex-direction: column;
     gap: 30px;
+    height: 50%;
+    /* center content */
+    top: 35%;
+    transform: translateX(-50%);
 }
 .practice_content_title_text
 {
@@ -134,18 +136,27 @@ button.selected{
     color: #40434E;
     font-family: 'Roboto bold', sans-serif;
 }
-.article_practice_content
+.practice_question_content
 {
     display: flex;
+    width: 50%;
+    height: 100%;
     flex-direction: column;
     gap: 20px;
 }
-.answer_text{
+.answer_content{
     display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    gap: 20px;
+}
+.input_answer_content{
+    display: none;
     flex-direction: column;
     gap: 10px;
 }
-.answer_text input[type=text] {
+.input_answer_content input[type=text] {
     width: 100%;
     height: 100%;
     font-size: 30px;
@@ -153,6 +164,20 @@ button.selected{
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+.options_answer_content{
+    display: none; /* when shown it should be set to grid */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    width: 100%;
+    height: 50%;
+}
+.answer_option_button{
+    background-color: #912f40;
+    width: 100%;
+    height: 100%;
 }
 
 .incorrect_answer_text{

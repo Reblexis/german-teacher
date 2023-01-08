@@ -44,14 +44,23 @@
                 <div class="practice_content_title_text">
                     <span id="practice_content_title_text">What's the correct article?</span>
                 </div>
-                <div class="article_practice_content">
+                <div class="practice_question_content">
                     <div id="practice_question_text" class="question_text">
                         Auto
                     </div>
-                    <div class="answer_text">
-                        <input type="text" id="answer_input" name="answer_input" value="">
-                        <button id="answer_button" class="answer_button" onclick="answer()">Answer (Enter)</button>
+                    <div class="answer_content">
+                        <div id="input_answer_content" class="input_answer_content">
+                            <input type="text" id="answer_input" name="answer_input" value="">
+                            <button id="answer_button" class="answer_button" onclick="answer()">Answer (Enter)</button>
+                        </div>
+                        <div id="options_answer_content" class="options_answer_content">
+                            <button id="option_button_1" class="answer_option_button" onclick="answer_option(0)">option 1</button>
+                            <button id="option_button_2" class="answer_option_button" onclick="answer_option(1)">option 2</button>
+                            <button id="option_button_3" class="answer_option_button" onclick="answer_option(2)">option 3</button>
+                            <button id="option_button_4" class="answer_option_button" onclick="answer_option(3)">option 4</button>
+                        </div>
                     </div>
+
                     <div id="incorrect_answer_text" class="incorrect_answer_text">
                         INCORRECT
                     </div>

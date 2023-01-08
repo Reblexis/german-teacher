@@ -9,4 +9,4 @@ def python_log(x):
     print(x)
 
 
-eel.start('main_menu.html', size=(1500, 900))  # Start the web.
+eel.start('main_menu.html', size=(1920, 1080))  # Start the web.

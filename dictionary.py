@@ -5,6 +5,8 @@ from typing import Union
 import pandas as pd
 import ast
 import googletrans
+import numpy as np
+import random
 
 from constants import *
 from DataManagment.file_system import load_file, save_to_file
@@ -42,7 +44,11 @@ class Dictionary:
 
         self.google_translator = googletrans.Translator()
 
-        self.dictionary_df = pd.read_pickle(self.DICTIONARY_PATH) if self.DICTIONARY_PATH.exists() else pd.DataFrame()
+        # Load dictionary without the useless row
+        self.dictionary_df = pd.read_pickle(self.DICTIONARY_PATH)
+        self.dictionary_df = self.dictionary_df[self.dictionary_df["name"] != "test_name"]
+        self.dictionary_df.drop_duplicates(subset="name", inplace=True)
+        print(self.dictionary_df)
 
     def find(self, class_name: str):
         soup = bs4.BeautifulSoup(self.searched_space, "html.parser")
@@ -51,7 +57,15 @@ class Dictionary:
             return None
         return data.get_text()
 
+    def replace_local_dictionary(self, new_dictionary):
+        # save current dictionary to a backup
+        self.dictionary_df.to_pickle(self.DICTIONARY_PATH.parent / f"dictionary_backup_{random.randint(0,1000000000)}.pickle")
+        self.dictionary_df = new_dictionary
+        self.dictionary_df.to_pickle(self.DICTIONARY_PATH)
+
     def save_to_local_dictionary(self, info: dict):
+        if len(self.dictionary_df[self.dictionary_df["name"] == info["name"]]) > 0:
+            return
         self.dictionary_df = pd.concat([self.dictionary_df, pd.DataFrame([info])])
         self.dictionary_df.to_pickle(self.DICTIONARY_PATH)
 
@@ -145,10 +159,11 @@ class DictionaryController:
         self.dictionary = Dictionary()
         self.dictionary_df = self.dictionary.dictionary_df
 
-    def get_random_noun(self, prioritized_property: str):
-        non_empty_articles = self.dictionary_df[self.dictionary_df[prioritized_property].notnull()]
-        random_row = non_empty_articles.sample()
-        return Noun(random_row["name"].iloc[0], dictionary=self.dictionary)
+    def get_random_nouns(self, prioritized_property: str, count: int) -> list[Noun]:
+        non_empty_property_rows = self.dictionary_df[self.dictionary_df[prioritized_property].notnull()]
+        random_rows = non_empty_property_rows.sample(count, replace=False)
+
+        return [Noun(row["name"], dictionary=self.dictionary) for _, row in random_rows.iterrows()]
 
 
 if __name__ == "__main__":
@@ -160,5 +175,5 @@ if __name__ == "__main__":
 
     print("\nDictionary controller test:")
     dictionary_controller = DictionaryController()
-    random_noun = dictionary_controller.get_random_noun("article")
-    print(random_noun)
+    random_nouns = dictionary_controller.get_random_nouns("article", 4)
+    print(random_nouns[0])
