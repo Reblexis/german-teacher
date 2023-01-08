@@ -1,7 +1,7 @@
 from pathlib import Path
 from collections import namedtuple
 
-DATA_PATH = Path("C:/Data/GermanTeacher")
+DATA_PATH = Path("Data")
 
 # API
 API_PATH = DATA_PATH / "API"

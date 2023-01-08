@@ -10,6 +10,14 @@ the dynamic behaviour of the app. The naming of files / folders follows the foll
 - `snake_case` for files
 - `CamelCase` for folders
 
+## Data ##
+The project contains also a data folder which can be placed anywhere in the computer (currently placed in the project, however normally it would be installed separately).
+It's composed of bigger files and saves.
+The data folder contains the following files:
+- API files (Data/API): these files are necessary for communication with one of the two APIs used in the project (PONS).
+- Datasets (Data/Datasets): word lists that were used to generate dictionary for the project (Raw folder) as well as the dictionary (Cleaned folder).
+- Statistics: doesn't contain anything by default but is used to save statistics of the user.
+
 ### Web app ###
 The web app can be found in the 'Interface' folder and is composed of the following files:
 - main_menu.html : the only html file of the app it contains all static elements of the app
@@ -31,7 +39,6 @@ The python code can be split in the following way:
 
 #### Dictionary related scripts ####
 - Dictionary/dictionary.py: contains the dictionary class which is responsible for all communication with APIs. It also contains the Noun class (represents nouns and their individual properties) and the DictionaryController class (allows for effective retrieval of words from dictionary).
-- Dictionary/nouns.csv: file, used for temporary dictionary content, the dictionary is currently composed of these nouns, additional data about the nouns has been retrieved through the dictionary module (e.g. meanings, translations, declension, etc.)
 
 #### Practice and statistics modules ####
 - Practice/practice.py: contains a practice controller class which is responsible for all core mechanics regarding the practice modes. It generates questions, checks answers, calls statistics update, etc. .

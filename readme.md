@@ -1,8 +1,8 @@
 # German teacher
 
 The goal of this app is to help you learn german rules and vocabulary. It is currently in development and therefore contains only core features.  
-For future, there is a plan to add advanced statistics, more practice modes, better feedback loop and background intelligence
-that would allow for more effective learning.
+For the future, there is a plan to add an advanced statistics, more practice modes, a better feedback loop and background intelligence
+that would allow for a more effective learning.
 
 ## Setup ##
 So far only one setup has been tested:
@@ -14,7 +14,7 @@ So far only one setup has been tested:
 2. Install the requirements using `pip install -r requirements.txt`
 
 ## Word types ##
-Each word if of a certain type.
+Each word is of a certain type.
 The type of word is determined by the way
 that the word is used in a sentence. 
 The following types are supported so far (green): 
