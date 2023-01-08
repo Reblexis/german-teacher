@@ -5,7 +5,7 @@ For the future, there is a plan to add an advanced statistics, more practice mod
 that would allow for a more effective learning.
 
 ## Setup ##
-So far only one setup has been tested:
+So far, following setups have been tested:
 - Windows 11
 - Python 3.10.8 / 3.10.9
 
