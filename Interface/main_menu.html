@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <script type="text/javascript" src="ui.js"></script>
     <script type="text/javascript" src="practice.js"></script>
+    <script type="text/javascript" src="statistics.js"></script>
 </head>
 <body onload="ui_init(); practice_init();">
     <div class="title">
@@ -18,7 +19,7 @@
     </div>
     <div class="menu">
         <button id="practice_button" class="panel_button" onclick="show_panel(0)">Practice</button>
-        <button id="stats_button" class="panel_button" onclick="show_panel(1)">Stats</button>
+        <button id="stats_button" class="panel_button" onclick="show_panel(1); show_statistics();">Stats</button>
         <button id="about_button" class="panel_button" onclick="show_panel(2)">About</button>
     </div>
 
@@ -27,16 +28,16 @@
             <div class="practice_settings">
                 <div class="practice_category_checkboxes">
                     <div class="practice_category_checkbox">
-                        <input type="checkbox" id="practice_category_1" name="practice_category_1" value="1">
-                        <label for="practice_category_1">Articles</label>
+                        <input type="checkbox" id="practice_category_article" name="practice_category_article" value="0" onchange="change_category('article')" checked>
+                        <label for="practice_category_article">Articles</label>
                     </div>
                     <div class="practice_category_checkbox">
-                        <input type="checkbox" id="practice_category_2" name="practice_category_2" value="2">
-                        <label for="practice_category_2">Translation</label>
+                        <input type="checkbox" id="practice_category_english_names" name="practice_category_english_names" value="1" onchange="change_category('english_names')" checked>
+                        <label for="practice_category_english_names">Translation</label>
                     </div>
                     <div class="practice_category_checkbox">
-                        <input type="checkbox" id="practice_category_3" name="practice_category_3" value="3">
-                        <label for="practice_category_3">Synonyms</label>
+                        <input type="checkbox" id="practice_category_meaning" name="practice_category_meaning" value="2" onchange="change_category('meaning');" checked>
+                        <label for="practice_category_meaning">Meaning</label>
                     </div>
                 </div>
             </div>
@@ -72,7 +73,9 @@
 
     <div id="stats_panel" class="panel">
         <div class = "stats">
-
+            <div class="stats_content">
+                <img id="accuracy_plot" src="Media/accuracy_plot.png" alt="Accuracy Plot">
+            </div>
         </div>
     </div>
 
