@@ -4,47 +4,47 @@ body{
 
 p{
     font-family: "Roboto Thin", sans-serif;
-    font-size: 0.8rem;
+    font-size: 1.25rem;
     color: #40434E;
     text-align: center;
 }
 
 .title{
     display: flex;
-    font-size: 2.4rem;
+    font-size: 3.75rem;
     color: #40434E;
     text-align: center;
     justify-content: center;
     font-family: 'Roboto', sans-serif;
-    margin-top: 2rem;
+    margin-top: 3.125rem;
 }
 
 .menu{
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 3.125rem;
     align-items: center;
 }
 .panel{
     display: none; /* when selected it should be set to flex */
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 3.125rem;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 1.25rem;
 }
 button
 {
     background-color: #912f40;
     border: none;
     color: white;
-    padding: 0.6rem 1.28rem;
+    padding: 0.9375rem 2rem;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 0.64rem;
-    margin: 0.16rem 0.08rem;
+    font-size: 1rem;
+    margin: 0.25rem 0.125rem;
     cursor: pointer;
-    border-radius: 0.48rem;
+    border-radius: 0.75rem;
 }
 
 .panel_button{
@@ -68,34 +68,34 @@ button.selected{
     display: flex;
     width: 100%;
     /*justify-content: center;*/
-    margin-top: 2rem;
+    margin-top: 3.125rem;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 1.25rem;
 }
 
 .practice_category_checkboxes
 {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
-    font-size: 0.8rem;
+    margin-top: 3.125rem;
+    font-size: 1.25rem;
     flex-direction: column;
 }
 
 .practice_category_checkbox{
-    margin: 1.2rem;
+    margin: 1.875rem;
     vertical-align: middle;
 }
 
 .practice_category_checkbox input[type=checkbox] {
-    width: 0.8rem;
-    height: 0.8rem;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .practice_category_checkbox label {
     display: inline-block;
-    margin-left: 0.4rem;
-    font-size: 1.2rem;
+    margin-left: 0.625rem;
+    font-size: 1.875rem;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -117,13 +117,13 @@ button.selected{
     left: 50%;
     width: 70%;
     display:flex;
-    font-size: 1.2rem;
+    font-size: 1.875rem;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.875rem;
     height: 50%;
     /* center content */
     top: 35%;
@@ -131,7 +131,7 @@ button.selected{
 }
 .practice_content_title_text
 {
-    font-size: 1.2rem;
+    font-size: 1.875rem;
     color: #40434E;
     font-family: 'Roboto bold', sans-serif;
 }
@@ -141,24 +141,24 @@ button.selected{
     width: 50%;
     height: 100%;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 1.25rem;
 }
 .answer_content{
     display: flex;
     width: 100%;
     height: 100%;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 1.25rem;
 }
 .input_answer_content{
     display: none;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.625rem;
 }
 .input_answer_content input[type=text] {
     width: 100%;
     height: 100%;
-    font-size: 1.2rem;
+    font-size: 1.875rem;
     font-family: 'Roboto', sans-serif;
     text-align: center;
     justify-content: center;
@@ -169,7 +169,7 @@ button.selected{
     display: none; /* when shown it should be set to grid */
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 0.2rem;
+    gap: 0.3125rem;
     width: 100%;
     height: 50%;
 }
@@ -195,29 +195,4 @@ button.selected{
 
 .visible{
     opacity: 1;
-}
-
-.stats{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    margin-top: 2rem;
-    align-items: center;
-    font-size: 0.8rem;
-}
-
-.stats_content{
-    display: flex;
-    width: 40%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 1.2rem;
-}
-
-.stats_content img{
-    display: flex;
-    width: 100%;
-    height: 100%;
 }
