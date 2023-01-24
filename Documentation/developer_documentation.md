@@ -25,7 +25,8 @@ The original type is a pandas DataFrame and contains the following columns:
 - 'article': the article of the word (der, die, das)
 - 'flexion': plural, past tense, etc.
 - 'meaning': meaning in German
-- 'english_names': possible English translations
+- 'english_names': possible English translations  
+
 Dictionary contains unique entries (no duplicates).
 
 ### Statistics ###
