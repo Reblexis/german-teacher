@@ -1,7 +1,8 @@
 import random
 import eel
 
-from Dictionary.dictionary import DictionaryController, Noun
+from constants import *
+from Dictionary.dictionary import Dictionary, DictionaryController, Noun
 from Statistics import statistics
 
 
@@ -12,7 +13,8 @@ class PracticeController:
         print("Initializing practice controller...")
         self.types = ["article", "meaning", "english_names"]
         self.correct_answer = None
-        self.dictionary_controller = DictionaryController()
+        self.dictionary = Dictionary(MAIN_DICTIONARY_PATH)
+        self.dictionary_controller = DictionaryController(self.dictionary)
         self.statistics_controller = statistics.get_controller()
         self.question_type = None
         self.questioned_noun = None

@@ -14,7 +14,7 @@ pd.options.mode.chained_assignment = None  # Ignores pandas unreasonable future 
 
 class StatisticsController:
     STATISTICS_PATH = DATA_PATH / "Statistics"
-    GUESSES_DF_PICKLE_PATH = STATISTICS_PATH / "guesses.pickle"
+    GUESSES_DF_JSON_PATH = STATISTICS_PATH / "guesses.json"
     GUESSES_DF_CSV_PATH = STATISTICS_PATH / "guesses.csv"
 
     PLOT_DETAIL = 10
@@ -23,8 +23,8 @@ class StatisticsController:
     COLORS = {"article": colors[0], "meaning": colors[1], "english_names": colors[2]}
 
     def __init__(self):
-        if not self.GUESSES_DF_PICKLE_PATH.exists():
-            ensure_dir(self.GUESSES_DF_PICKLE_PATH.parent)
+        if not self.GUESSES_DF_JSON_PATH.exists():
+            ensure_dir(self.GUESSES_DF_JSON_PATH.parent)
             self.guesses_df = pd.DataFrame(columns=["category", "name", "guess", "correct_answer", "is_correct",
                                                     "time"])
             # cast time column to datetime and is_correct to bool
@@ -35,11 +35,11 @@ class StatisticsController:
         self.load_statistics()
 
     def save_statistics(self):
-        self.guesses_df.to_pickle(self.GUESSES_DF_PICKLE_PATH)
+        self.guesses_df.to_json(self.GUESSES_DF_JSON_PATH, orient="records")
         self.guesses_df.to_csv(self.GUESSES_DF_CSV_PATH)
 
     def load_statistics(self):
-        self.guesses_df = pd.read_pickle(self.GUESSES_DF_PICKLE_PATH)
+        self.guesses_df = pd.read_json(self.GUESSES_DF_JSON_PATH, orient="records")
 
     def add_guess(self, category, name, guess, correct_answer, is_correct):
         # save current date and time in time column

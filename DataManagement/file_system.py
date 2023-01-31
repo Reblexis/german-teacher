@@ -5,6 +5,7 @@ import pandas as pd
 import json
 import numpy as np
 import io
+import datetime
 
 
 def clear_folder_content(folder_path: Path, including_folder: bool = False):
@@ -71,3 +72,10 @@ def load_file(file_path: Path, additional_info: dict = None):
         return sample_rate, data
     else:
         raise NotImplementedError(f"Reading files of this object type isn't implemented yet. File: {file_path} .")
+
+
+def get_date_time() -> str:
+    """
+    :return: Used to be part of a file name with current date and time
+    """
+    return datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

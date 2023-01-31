@@ -9,7 +9,7 @@ import numpy as np
 import random
 
 from constants import *
-from DataManagement.file_system import load_file, save_to_file
+from DataManagement.file_system import load_file, save_to_file, get_date_time, ensure_dir
 
 
 class Dictionary:
@@ -17,7 +17,10 @@ class Dictionary:
     Allows for API interaction and word info lookup. Also saves data to local dictionary
     for faster retrieval and less API communication. Uses two APIs: PONS and Google Translate.
     """
-    DICTIONARY_PATH = CLEANED_DATASETS_PATH / "dictionary.pickle"
+    DICTIONARY_LOCAL_PATH = "dictionary.json"
+    BACKUP_LOCAL_PATH = "Backup"
+    MAX_BACKUPS = 30
+
     DICTIONARY_URL = "https://api.pons.com/v1/dictionary"
     API_KEY_PATH = API_PATH / "key.txt"
 
@@ -28,14 +31,16 @@ class Dictionary:
 
     NUM_MEANINGS_LIMIT = 5
 
-    RESET = False
+    def __init__(self, dictionary_data_path: Path, reset=False):
+        self.dictionary_data_path = dictionary_data_path
+        self.dictionary_path = self.dictionary_data_path / self.DICTIONARY_LOCAL_PATH
+        self.backup_path = self.dictionary_data_path / self.BACKUP_LOCAL_PATH
 
-    def __init__(self):
         key = load_file(self.API_KEY_PATH)["key"]
         self.header = {"X-Secret": key}
         self.searched_space = None
 
-        if not self.DICTIONARY_PATH.exists() or self.RESET:
+        if not self.dictionary_path.exists() or reset:
             # Create dictionary with a useless row to prevent bugs
             example = {"name": "test_name", "article": "test_article", "flexion": "test_flexion",
                        "meanings": "test_meanings", "word_type": "test_type", "english_names": "test_english_names"}
@@ -45,7 +50,7 @@ class Dictionary:
         self.google_translator = googletrans.Translator()
 
         # Load dictionary without the useless row
-        self.dictionary_df = pd.read_pickle(self.DICTIONARY_PATH)
+        self.dictionary_df = pd.read_json(self.dictionary_path, orient="records")
         self.dictionary_df = self.dictionary_df[self.dictionary_df["name"] != "test_name"]
         self.dictionary_df.drop_duplicates(subset="name", inplace=True)
         print(self.dictionary_df)
@@ -57,17 +62,29 @@ class Dictionary:
             return None
         return data.get_text()
 
+    def save_to_path(self, path: Path):
+        self.dictionary_df.to_json(path, orient="records")
+
+    def save_backup(self):
+        ensure_dir(self.backup_path)
+        backups = list(self.backup_path.glob("*.json"))
+        if len(backups) >= self.MAX_BACKUPS:
+            oldest_backup = min(backups, key=lambda x: x.stat().st_mtime)
+            oldest_backup.unlink()
+        self.save_to_path(self.backup_path / f"backup_{get_date_time()}.json")
+
     def replace_local_dictionary(self, new_dictionary):
         # save current dictionary to a backup
-        self.dictionary_df.to_pickle(self.DICTIONARY_PATH.parent / f"dictionary_backup_{random.randint(0,1000000000)}.pickle")
+        self.save_backup()
         self.dictionary_df = new_dictionary
-        self.dictionary_df.to_pickle(self.DICTIONARY_PATH)
+        self.save_to_path(self.dictionary_path)
 
     def save_to_local_dictionary(self, info: dict):
-        if len(self.dictionary_df[self.dictionary_df["name"] == info["name"]]) > 0:
+        if len(self.dictionary_df) > 0 and len(self.dictionary_df[self.dictionary_df["name"] == info["name"]]) > 0:
             return
+        self.save_backup()
         self.dictionary_df = pd.concat([self.dictionary_df, pd.DataFrame([info])])
-        self.dictionary_df.to_pickle(self.DICTIONARY_PATH)
+        self.save_to_path(self.dictionary_path)
 
     def word_info(self, german_name: str) -> Union[dict, str]:
         if len(self.dictionary_df[self.dictionary_df["name"] == german_name]) > 0:
@@ -155,8 +172,8 @@ class Noun:
 
 
 class DictionaryController:
-    def __init__(self):
-        self.dictionary = Dictionary()
+    def __init__(self, dictionary: Dictionary):
+        self.dictionary = dictionary
         self.dictionary_df = self.dictionary.dictionary_df
 
     def get_random_nouns(self, prioritized_property: str, count: int) -> list[Noun]:
@@ -167,13 +184,13 @@ class DictionaryController:
 
 
 if __name__ == "__main__":
-    test_dictionary = Dictionary()
+    test_dictionary = Dictionary(MAIN_DICTIONARY_PATH)
     print("Dictionary test:")
     noun = Noun("Hand", dictionary=test_dictionary)
     print(noun)
     print(noun.meaning)
 
     print("\nDictionary controller test:")
-    dictionary_controller = DictionaryController()
+    dictionary_controller = DictionaryController(test_dictionary)
     random_nouns = dictionary_controller.get_random_nouns("article", 4)
     print(random_nouns[0])
